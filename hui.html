@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>晖｜5/11 生日快樂</title>
+    <style>
+      :root {
+        --bg0: #070a12;
+        --bg1: #0b1220;
+        --card: rgba(14, 25, 46, 0.62);
+        --card2: rgba(10, 18, 34, 0.45);
+        --stroke: rgba(158, 203, 255, 0.18);
+        --stroke2: rgba(158, 203, 255, 0.12);
+        --text: rgba(240, 248, 255, 0.92);
+        --muted: rgba(210, 230, 255, 0.72);
+        --blueA: #8bd1ff;
+        --blueB: #4aa6ff;
+        --blueC: #2d66ff;
+        --mint: #62ffd3;
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+        --shadow2: 0 10px 30px rgba(0, 0, 0, 0.35);
+        --radius: 28px;
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans TC",
+          "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+        color: var(--text);
+        background: radial-gradient(1200px 800px at 15% 10%, rgba(45, 102, 255, 0.22), transparent 55%),
+          radial-gradient(900px 600px at 85% 30%, rgba(74, 166, 255, 0.20), transparent 55%),
+          radial-gradient(900px 700px at 55% 90%, rgba(98, 255, 211, 0.10), transparent 60%),
+          linear-gradient(180deg, var(--bg0), var(--bg1) 70%, #050713);
+        overflow-x: hidden;
+      }
+
+      /* Ambient animated gradient veil */
+      .veil {
+        position: fixed;
+        inset: -20%;
+        background:
+          radial-gradient(closest-side at 25% 30%, rgba(139, 209, 255, 0.16), transparent 62%),
+          radial-gradient(closest-side at 70% 40%, rgba(45, 102, 255, 0.16), transparent 62%),
+          radial-gradient(closest-side at 55% 70%, rgba(98, 255, 211, 0.08), transparent 62%);
+        filter: blur(34px) saturate(125%);
+        opacity: 0.95;
+        transform: translate3d(0, 0, 0);
+        animation: drift 18s ease-in-out infinite alternate;
+        pointer-events: none;
+        z-index: 0;
+      }
+      @keyframes drift {
+        0% { transform: translate(-1.5%, -1%) scale(1.02); }
+        100% { transform: translate(1.5%, 1%) scale(1.05); }
+      }
+
+      /* Starfield canvas layer */
+      canvas#sky {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 2;
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: clamp(18px, 4vw, 46px);
+      }
+
+      .frame {
+        width: min(980px, 100%);
+        display: grid;
+        gap: 16px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(158, 203, 255, 0.10);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, #e8fbff 0%, var(--blueA) 35%, rgba(74, 166, 255, 0.35) 70%);
+        box-shadow: 0 0 20px rgba(139, 209, 255, 0.55);
+      }
+
+      .brand strong {
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 12px;
+        color: rgba(230, 245, 255, 0.82);
+        white-space: nowrap;
+      }
+
+      .brand span {
+        font-size: 12px;
+        color: rgba(210, 230, 255, 0.60);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 48ch;
+      }
+
+      .actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 10px 12px;
+        font-weight: 650;
+        color: rgba(240, 248, 255, 0.92);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(158, 203, 255, 0.14);
+        cursor: pointer;
+        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+        backdrop-filter: blur(12px);
+      }
+      button:hover {
+        transform: translateY(-1px);
+        border-color: rgba(139, 209, 255, 0.28);
+        background: rgba(139, 209, 255, 0.09);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+      }
+      button:active { transform: translateY(0); }
+      button:focus-visible {
+        outline: 2px solid rgba(139, 209, 255, 0.55);
+        outline-offset: 2px;
+      }
+
+      .primary {
+        background: linear-gradient(135deg, rgba(74, 166, 255, 0.24), rgba(45, 102, 255, 0.18));
+        border-color: rgba(139, 209, 255, 0.24);
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+          radial-gradient(1000px 700px at 20% 0%, rgba(139, 209, 255, 0.10), transparent 55%),
+          radial-gradient(900px 650px at 100% 30%, rgba(45, 102, 255, 0.10), transparent 60%),
+          radial-gradient(900px 650px at 40% 120%, rgba(98, 255, 211, 0.05), transparent 55%);
+        border: 1px solid rgba(158, 203, 255, 0.14);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(18px);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background:
+          radial-gradient(600px 250px at 18% 10%, rgba(139, 209, 255, 0.18), transparent 60%),
+          radial-gradient(500px 220px at 92% 22%, rgba(45, 102, 255, 0.16), transparent 60%),
+          radial-gradient(420px 220px at 70% 110%, rgba(98, 255, 211, 0.10), transparent 60%);
+        filter: blur(16px);
+        opacity: 0.85;
+        pointer-events: none;
+      }
+
+      .cardInner {
+        position: relative;
+        padding: clamp(22px, 4vw, 44px);
+        display: grid;
+        gap: clamp(18px, 3vw, 26px);
+      }
+
+      .hero {
+        display: grid;
+        gap: 12px;
+      }
+
+      .pillRow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(158, 203, 255, 0.12);
+        color: rgba(230, 245, 255, 0.82);
+        font-size: 12px;
+      }
+      .pill i {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, #e8fbff 0%, var(--blueA) 30%, rgba(74, 166, 255, 0.25) 70%);
+        box-shadow: 0 0 18px rgba(139, 209, 255, 0.5);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 64px);
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+      }
+      .shine {
+        background: linear-gradient(90deg, rgba(230, 248, 255, 0.96), rgba(139, 209, 255, 0.92), rgba(74, 166, 255, 0.9), rgba(230, 248, 255, 0.96));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 12px 28px rgba(74, 166, 255, 0.18));
+      }
+
+      .subtitle {
+        margin: 0;
+        font-size: clamp(14px, 2vw, 18px);
+        color: rgba(210, 230, 255, 0.72);
+        max-width: 70ch;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: clamp(14px, 2.4vw, 18px);
+        align-items: stretch;
+      }
+      @media (max-width: 840px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+
+      .panel {
+        border-radius: 22px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+        border: 1px solid rgba(158, 203, 255, 0.12);
+        box-shadow: var(--shadow2);
+        overflow: hidden;
+      }
+
+      .panelHead {
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(158, 203, 255, 0.10);
+        background: linear-gradient(180deg, rgba(139, 209, 255, 0.06), rgba(255, 255, 255, 0.02));
+      }
+      .panelHead h2 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(230, 245, 255, 0.78);
+      }
+      .panelHead .hint {
+        font-size: 12px;
+        color: rgba(210, 230, 255, 0.62);
+      }
+
+      .panelBody { padding: 18px; }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .tile {
+        padding: 14px 12px;
+        border-radius: 18px;
+        background: radial-gradient(220px 120px at 50% 0%, rgba(139, 209, 255, 0.10), transparent 68%),
+          rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(158, 203, 255, 0.12);
+        text-align: center;
+        user-select: none;
+      }
+      .tile b {
+        display: block;
+        font-size: clamp(24px, 3.6vw, 36px);
+        letter-spacing: -0.02em;
+      }
+      .tile span {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(210, 230, 255, 0.70);
+      }
+
+      .message {
+        margin: 0;
+        line-height: 1.75;
+        color: rgba(235, 246, 255, 0.90);
+        font-size: 15px;
+      }
+      .message strong {
+        color: rgba(230, 248, 255, 0.98);
+        font-weight: 750;
+      }
+
+      .sigRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(158, 203, 255, 0.10);
+        color: rgba(210, 230, 255, 0.64);
+        font-size: 12px;
+      }
+
+      .mini {
+        display: grid;
+        gap: 10px;
+      }
+      .mini .chip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 12px 12px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(158, 203, 255, 0.10);
+      }
+      .mini .chip .k {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(230, 245, 255, 0.82);
+        font-size: 13px;
+      }
+      .mini .chip .k .ico {
+        width: 22px;
+        height: 22px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(139, 209, 255, 0.25), rgba(45, 102, 255, 0.12));
+        border: 1px solid rgba(158, 203, 255, 0.14);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.20);
+      }
+      .mini .chip .v {
+        font-size: 13px;
+        color: rgba(210, 230, 255, 0.72);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 4px 2px;
+        color: rgba(210, 230, 255, 0.55);
+        font-size: 12px;
+        flex-wrap: wrap;
+      }
+      .footer a {
+        color: rgba(139, 209, 255, 0.85);
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(139, 209, 255, 0.35);
+      }
+      .footer a:hover { border-bottom-color: rgba(139, 209, 255, 0.7); }
+
+      /* Toast */
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        background: rgba(10, 18, 34, 0.70);
+        border: 1px solid rgba(158, 203, 255, 0.16);
+        border-radius: 999px;
+        padding: 10px 14px;
+        color: rgba(240, 248, 255, 0.88);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+        z-index: 50;
+        max-width: min(680px, calc(100vw - 24px));
+        text-align: center;
+      }
+      .toast.show { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+
+      /* Easter egg: cake modal */
+      .cakeModal {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+      .cakeModal.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .cakeCard {
+        width: min(780px, 100%);
+        border-radius: 26px;
+        border: 1px solid rgba(158, 203, 255, 0.18);
+        background:
+          radial-gradient(900px 500px at 18% 0%, rgba(139, 209, 255, 0.14), transparent 60%),
+          radial-gradient(800px 520px at 96% 25%, rgba(45, 102, 255, 0.14), transparent 60%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        box-shadow: 0 26px 80px rgba(0, 0, 0, 0.58);
+        backdrop-filter: blur(18px);
+        overflow: hidden;
+        transform: translateY(10px) scale(0.985);
+        animation: cakeIn 520ms cubic-bezier(.2,.9,.2,1) both;
+      }
+      @keyframes cakeIn {
+        0% { transform: translateY(16px) scale(0.975); filter: blur(2px); opacity: 0; }
+        100% { transform: translateY(0) scale(1); filter: blur(0); opacity: 1; }
+      }
+      .cakeCardHead {
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border-bottom: 1px solid rgba(158, 203, 255, 0.12);
+        background: linear-gradient(180deg, rgba(139, 209, 255, 0.08), rgba(255, 255, 255, 0.02));
+      }
+      .cakeCardHead .title {
+        margin: 0;
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(230, 245, 255, 0.80);
+      }
+      .cakeCardBody {
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+      @media (max-width: 780px) {
+        .cakeCardBody { grid-template-columns: 1fr; }
+      }
+      .cakeText h3 {
+        margin: 0 0 8px 0;
+        font-size: clamp(20px, 3.4vw, 28px);
+        letter-spacing: -0.01em;
+      }
+      .cakeText p {
+        margin: 0;
+        color: rgba(210, 230, 255, 0.75);
+        line-height: 1.75;
+        font-size: 14px;
+      }
+      .cakeActions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .cakeArt {
+        display: grid;
+        place-items: center;
+        padding: 12px;
+      }
+      .cakeSvg {
+        width: min(320px, 100%);
+        height: auto;
+        filter: drop-shadow(0 18px 28px rgba(74, 166, 255, 0.18));
+      }
+      .cakeFloat {
+        animation: floaty 2.8s ease-in-out infinite;
+        transform-origin: 50% 70%;
+      }
+      @keyframes floaty {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-4px) scale(1.008); }
+      }
+      .flame {
+        transform-origin: 50% 90%;
+        animation: flicker 1.4s ease-in-out infinite;
+      }
+      .flame:nth-child(2) { animation-delay: -0.35s; }
+      .flame:nth-child(3) { animation-delay: -0.7s; }
+      @keyframes flicker {
+        0%, 100% { transform: scale(1) translateY(0); opacity: 0.92; }
+        50% { transform: scale(1.08) translateY(-1.5px); opacity: 1; }
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .veil { animation: none; }
+        button { transition: none; }
+        .cakeCard { animation: none; }
+        .flame { animation: none; }
+        .cakeFloat { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="veil" aria-hidden="true"></div>
+    <canvas id="sky" aria-hidden="true"></canvas>
+
+    <div class="wrap">
+      <div class="frame">
+        <div class="topbar">
+          <div class="brand">
+            <div class="dot" aria-hidden="true"></div>
+            <div style="min-width:0">
+              <div style="display:flex; gap:10px; align-items:baseline; flex-wrap:wrap">
+                <strong>Birthday UI</strong>
+                <span id="subline">為晖準備的一張藍色小宇宙</span>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="btnConfetti" class="primary" type="button">點一下，放藍色煙火</button>
+            <button id="btnCopy" type="button">複製祝福</button>
+          </div>
+        </div>
+
+        <section class="card" aria-label="生日祝福卡片">
+          <div class="cardInner">
+            <header class="hero">
+              <div class="pillRow">
+                <div class="pill"><i aria-hidden="true"></i> 5/11</div>
+                <div class="pill"><i aria-hidden="true"></i> 藍色控：已啟動</div>
+                <div class="pill"><i aria-hidden="true"></i> 送給：晖</div>
+              </div>
+              <h1 class="shine">晖，生日快樂。</h1>
+              <p class="subtitle">
+                這是一張可以被點亮的生日頁：倒數到 5/11、點擊會放煙火、也可以一鍵複製祝福文字。希望你喜歡這片專屬於你的藍。
+              </p>
+            </header>
+
+            <div class="grid">
+              <section class="panel" aria-label="倒數計時">
+                <div class="panelHead">
+                  <h2>Countdown</h2>
+                  <div class="hint" id="targetHint">目標：5/11 00:00（本機時區）</div>
+                </div>
+                <div class="panelBody">
+                  <div class="countdown" role="timer" aria-live="polite">
+                    <div class="tile"><b id="d">—</b><span>Days</span></div>
+                    <div class="tile"><b id="h">—</b><span>Hours</span></div>
+                    <div class="tile"><b id="m">—</b><span>Minutes</span></div>
+                    <div class="tile"><b id="s">—</b><span>Seconds</span></div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="panel" aria-label="今天的祝福">
+                <div class="panelHead">
+                  <h2>Message</h2>
+                  <div class="hint">輕輕地，送你一段藍色的話</div>
+                </div>
+                <div class="panelBody">
+                  <p class="message" id="wish">
+                    <strong>晖</strong>，5 月 11 日生日快樂！願你新的一歲像你喜歡的藍色一樣：清澈、沉穩、自由，又充滿希望。<br />
+                    把煩惱留在昨天，把好運與勇氣帶進明天；願你每天都被喜歡的事照亮，心裡一直有一片安靜的藍天。
+                  </p>
+                  <div class="sigRow">
+                    <div id="sigLeft">—</div>
+                    <div id="sigRight">點「放藍色煙火」或在畫面任意點一下</div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <section class="panel" aria-label="小細節">
+              <div class="panelHead">
+                <h2>Little Details</h2>
+                <div class="hint">藍色的細節，讓祝福更像你</div>
+              </div>
+              <div class="panelBody">
+                <div class="mini">
+                  <div class="chip">
+                    <div class="k"><span class="ico" aria-hidden="true">✦</span> 今日日期</div>
+                    <div class="v" id="today">—</div>
+                  </div>
+                  <div class="chip">
+                    <div class="k"><span class="ico" aria-hidden="true">◈</span> 距離 5/11</div>
+                    <div class="v" id="delta">—</div>
+                  </div>
+                  <div class="chip">
+                    <div class="k"><span class="ico" aria-hidden="true">⬡</span> 祝福亮度</div>
+                    <div class="v" id="glow">準備好了</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <div class="footer">
+              <div>提示：按 <kbd style="background:rgba(255,255,255,0.05);border:1px solid rgba(158,203,255,0.14);padding:2px 8px;border-radius:8px">C</kbd> 也能放煙火。</div>
+              <div>
+                若你想改成「中午 12:00」或指定年份，把檔案裡的 <code>target</code> 改掉即可。
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div id="cakeModal" class="cakeModal" role="dialog" aria-modal="true" aria-label="生日彩蛋">
+      <div class="cakeCard" role="document">
+        <div class="cakeCardHead">
+          <div class="title">Easter Egg</div>
+          <button id="btnCloseCake" type="button">關閉</button>
+        </div>
+        <div class="cakeCardBody">
+          <div class="cakeText">
+            <h3 class="shine">蛋糕出現：生日快樂，晖。</h3>
+            <p>
+              倒數結束後，這顆藍色蛋糕就會出來報到。你也可以按下面的按鈕，再放一次藍色煙火，把今天的快樂點滿。
+            </p>
+            <div class="cakeActions">
+              <button id="btnCakeFire" class="primary" type="button">再放一次煙火</button>
+              <button id="btnCakeCopy" type="button">複製祝福</button>
+            </div>
+          </div>
+          <div class="cakeArt" aria-hidden="true">
+            <svg class="cakeSvg cakeFloat" viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="aura" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(260 206) rotate(90) scale(150 190)">
+                  <stop stop-color="#E8FBFF" stop-opacity="0.28"/>
+                  <stop offset="0.45" stop-color="#8BD1FF" stop-opacity="0.16"/>
+                  <stop offset="1" stop-color="#2D66FF" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="cakeSide" x1="140" y1="190" x2="390" y2="355" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#132A4A" stop-opacity="0.96"/>
+                  <stop offset="0.55" stop-color="#0C1A33" stop-opacity="0.92"/>
+                  <stop offset="1" stop-color="#081226" stop-opacity="0.90"/>
+                </linearGradient>
+                <linearGradient id="cakeTop" x1="160" y1="165" x2="380" y2="245" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#CFF3FF" stop-opacity="0.90"/>
+                  <stop offset="0.35" stop-color="#8BD1FF" stop-opacity="0.80"/>
+                  <stop offset="0.78" stop-color="#4AA6FF" stop-opacity="0.68"/>
+                  <stop offset="1" stop-color="#2D66FF" stop-opacity="0.55"/>
+                </linearGradient>
+                <linearGradient id="rim" x1="165" y1="260" x2="360" y2="260" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E8FBFF" stop-opacity="0.45"/>
+                  <stop offset="0.5" stop-color="#8BD1FF" stop-opacity="0.18"/>
+                  <stop offset="1" stop-color="#E8FBFF" stop-opacity="0.32"/>
+                </linearGradient>
+                <radialGradient id="plate" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(260 356) rotate(90) scale(54 190)">
+                  <stop stop-color="#E8FBFF" stop-opacity="0.22"/>
+                  <stop offset="1" stop-color="#8BD1FF" stop-opacity="0.04"/>
+                </radialGradient>
+                <filter id="soft" x="-40" y="-40" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="1.2" />
+                </filter>
+              </defs>
+
+              <!-- aura -->
+              <ellipse cx="260" cy="206" rx="200" ry="150" fill="url(#aura)"/>
+
+              <!-- plate shadow -->
+              <ellipse cx="260" cy="356" rx="180" ry="60" fill="rgba(0,0,0,0.28)"/>
+              <ellipse cx="260" cy="356" rx="190" ry="66" fill="url(#plate)" stroke="rgba(158,203,255,0.18)"/>
+
+              <!-- candles (2 + center) -->
+              <g filter="url(#soft)">
+                <rect x="190" y="92" width="18" height="70" rx="9" fill="rgba(232,251,255,0.58)" stroke="rgba(139,209,255,0.55)" />
+                <rect x="251" y="84" width="18" height="78" rx="9" fill="rgba(232,251,255,0.62)" stroke="rgba(139,209,255,0.60)" />
+                <rect x="312" y="92" width="18" height="70" rx="9" fill="rgba(232,251,255,0.58)" stroke="rgba(139,209,255,0.55)" />
+                <g class="flame">
+                  <path d="M199 72c10 11 8 26 0 33-9-7-11-22 0-33Z" fill="rgba(98,255,211,0.78)"/>
+                  <path d="M199 76c6 8 5 18 0 23-6-5-7-15 0-23Z" fill="rgba(139,209,255,0.90)"/>
+                </g>
+                <g class="flame">
+                  <path d="M260 64c10 11 8 26 0 33-9-7-11-22 0-33Z" fill="rgba(98,255,211,0.78)"/>
+                  <path d="M260 68c6 8 5 18 0 23-6-5-7-15 0-23Z" fill="rgba(139,209,255,0.90)"/>
+                </g>
+                <g class="flame">
+                  <path d="M321 72c10 11 8 26 0 33-9-7-11-22 0-33Z" fill="rgba(98,255,211,0.78)"/>
+                  <path d="M321 76c6 8 5 18 0 23-6-5-7-15 0-23Z" fill="rgba(139,209,255,0.90)"/>
+                </g>
+              </g>
+
+              <!-- cake base (rounded cylinder) -->
+              <g>
+                <!-- side -->
+                <path d="M140 212c0-28 28-50 62-50h116c34 0 62 22 62 50v86c0 34-28 62-62 62H202c-34 0-62-28-62-62v-86Z"
+                  fill="url(#cakeSide)" stroke="rgba(158,203,255,0.20)"/>
+
+                <!-- top icing -->
+                <path d="M160 196c18-26 50-40 86-40h28c36 0 68 14 86 40 10 15 3 28-14 28H174c-17 0-24-13-14-28Z"
+                  fill="url(#cakeTop)" stroke="rgba(158,203,255,0.26)"/>
+
+                <!-- glossy rim highlight -->
+                <path d="M170 236h180" stroke="url(#rim)" stroke-width="8" stroke-linecap="round" opacity="0.8"/>
+
+                <!-- icing drips (curvy, nicer) -->
+                <path d="M186 222c0 18 18 18 18 38s-18 20-18 40"
+                  stroke="rgba(232,251,255,0.42)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M232 222c0 16 16 16 16 34s-16 18-16 36"
+                  stroke="rgba(139,209,255,0.46)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M280 222c0 18 18 18 18 38s-18 20-18 40"
+                  stroke="rgba(232,251,255,0.38)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M326 222c0 16 16 16 16 34s-16 18-16 36"
+                  stroke="rgba(139,209,255,0.42)" stroke-width="10" stroke-linecap="round"/>
+
+                <!-- sprinkles -->
+                <g opacity="0.85">
+                  <circle cx="206" cy="206" r="4" fill="rgba(98,255,211,0.7)"/>
+                  <circle cx="236" cy="198" r="3" fill="rgba(232,251,255,0.7)"/>
+                  <circle cx="266" cy="206" r="4" fill="rgba(139,209,255,0.8)"/>
+                  <circle cx="296" cy="198" r="3" fill="rgba(232,251,255,0.7)"/>
+                  <circle cx="326" cy="208" r="4" fill="rgba(98,255,211,0.65)"/>
+                  <circle cx="246" cy="220" r="3" fill="rgba(232,251,255,0.65)"/>
+                  <circle cx="306" cy="220" r="3" fill="rgba(232,251,255,0.65)"/>
+                </g>
+
+                <!-- name tag -->
+                <rect x="204" y="270" width="112" height="40" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(158,203,255,0.18)"/>
+                <text x="260" y="297" text-anchor="middle" font-size="18" fill="rgba(230,245,255,0.92)" font-family="ui-sans-serif, system-ui">晖</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      // ---- Utilities
+      const $ = (id) => document.getElementById(id);
+      const pad2 = (n) => String(n).padStart(2, "0");
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+      // ---- Target: next May 11th, local time 00:00
+      function nextMay11() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const tThis = new Date(year, 4, 11, 0, 0, 0, 0); // month is 0-based, 4=May
+        if (now <= tThis) return tThis;
+        return new Date(year + 1, 4, 11, 0, 0, 0, 0);
+      }
+      const target = nextMay11();
+      $("targetHint").textContent = `目標：${target.getFullYear()}/05/11 00:00（本機時區）`;
+
+      function fmtDate(d) {
+        const y = d.getFullYear();
+        const mo = pad2(d.getMonth() + 1);
+        const da = pad2(d.getDate());
+        const hh = pad2(d.getHours());
+        const mm = pad2(d.getMinutes());
+        return `${y}/${mo}/${da} ${hh}:${mm}`;
+      }
+
+      // ---- Countdown
+      function tick() {
+        const now = new Date();
+        const diff = target.getTime() - now.getTime();
+
+        $("today").textContent = fmtDate(now);
+
+        if (diff <= 0) {
+          $("d").textContent = "0";
+          $("h").textContent = "00";
+          $("m").textContent = "00";
+          $("s").textContent = "00";
+          $("delta").textContent = "就是今天";
+          $("glow").textContent = "生日模式：已點亮";
+          $("subline").textContent = "今天是晖的日子，把藍色留給快樂";
+          showCakeEgg(true);
+          return;
+        }
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        $("d").textContent = String(days);
+        $("h").textContent = pad2(hours);
+        $("m").textContent = pad2(minutes);
+        $("s").textContent = pad2(seconds);
+
+        const about = days > 0 ? `${days} 天` : `${hours} 小時`;
+        $("delta").textContent = `還有 ${about}`;
+
+        const glow = clamp(100 - Math.floor(diff / (1000 * 60 * 60 * 24)) * 8, 18, 96);
+        $("glow").textContent = `${glow}%`;
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      // ---- Toast
+      let toastTimer = null;
+      function toast(msg) {
+        const el = $("toast");
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+      }
+
+      // ---- Copy wish
+      async function copyWish() {
+        const text = $("wish").innerText.replace(/\n{3,}/g, "\n\n").trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          toast("已複製祝福，可以直接貼給晖。");
+        } catch {
+          // Fallback
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.left = "-9999px";
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          try {
+            document.execCommand("copy");
+            toast("已複製祝福，可以直接貼給晖。");
+          } catch {
+            toast("複製失敗：請手動選取文字複製。");
+          } finally {
+            document.body.removeChild(ta);
+          }
+        }
+      }
+      $("btnCopy").addEventListener("click", copyWish);
+
+      // ---- Easter egg: cake
+      let eggShown = false;
+      function showCakeEgg(fromCountdown = false) {
+        if (eggShown) return;
+        eggShown = true;
+        $("cakeModal").classList.add("show");
+        if (fromCountdown) {
+          toast("倒數完成：蛋糕出現。");
+          // small celebratory burst
+          setTimeout(() => fireAtCenter(), 180);
+          setTimeout(() => fireAtCenter(), 520);
+        } else {
+          toast("彩蛋預覽：蛋糕已出現。");
+        }
+      }
+      function hideCakeEgg() {
+        $("cakeModal").classList.remove("show");
+      }
+
+      // ---- Confetti / fireworks (blue theme)
+      const confettiCanvas = document.createElement("canvas");
+      confettiCanvas.style.position = "fixed";
+      confettiCanvas.style.inset = "0";
+      confettiCanvas.style.width = "100%";
+      confettiCanvas.style.height = "100%";
+      confettiCanvas.style.pointerEvents = "none";
+      confettiCanvas.style.zIndex = "3";
+      document.body.appendChild(confettiCanvas);
+
+      const cctx = confettiCanvas.getContext("2d");
+      const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      function resizeCanvases() {
+        const w = Math.floor(window.innerWidth * DPR);
+        const h = Math.floor(window.innerHeight * DPR);
+        confettiCanvas.width = w;
+        confettiCanvas.height = h;
+        sky.width = w;
+        sky.height = h;
+      }
+      window.addEventListener("resize", resizeCanvases);
+
+      const palette = [
+        { r: 139, g: 209, b: 255 },
+        { r: 74, g: 166, b: 255 },
+        { r: 45, g: 102, b: 255 },
+        { r: 98, g: 255, b: 211 },
+        { r: 232, g: 251, b: 255 },
+      ];
+
+      let particles = [];
+      function burst(x, y, power = 1) {
+        const count = Math.floor(120 * power);
+        for (let i = 0; i < count; i++) {
+          const col = palette[(Math.random() * palette.length) | 0];
+          const a = Math.random() * Math.PI * 2;
+          const sp = (2.2 + Math.random() * 6.2) * DPR * power;
+          particles.push({
+            x: x * DPR,
+            y: y * DPR,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp - (2.2 * DPR * power),
+            g: (0.18 + Math.random() * 0.22) * DPR,
+            w: (2 + Math.random() * 3.6) * DPR,
+            h: (2 + Math.random() * 10) * DPR,
+            r: col.r,
+            gC: col.g,
+            b: col.b,
+            life: 0,
+            ttl: 70 + Math.random() * 45,
+            rot: Math.random() * Math.PI,
+            vr: (Math.random() - 0.5) * 0.18,
+            kind: Math.random() < 0.45 ? "ribbon" : "spark",
+          });
+        }
+        toast("藍色煙火：已點亮。");
+      }
+
+      function stepParticles() {
+        if (!cctx) return;
+        cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        const now = performance.now();
+
+        particles = particles.filter((p) => p.life < p.ttl);
+        for (const p of particles) {
+          p.life += 1;
+          p.vx *= 0.992;
+          p.vy += p.g;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+
+          const t = p.life / p.ttl;
+          const alpha = Math.sin((1 - t) * Math.PI) * 0.95;
+
+          cctx.save();
+          cctx.translate(p.x, p.y);
+          cctx.rotate(p.rot);
+          cctx.globalAlpha = alpha;
+
+          if (p.kind === "spark") {
+            cctx.fillStyle = `rgb(${p.r}, ${p.gC}, ${p.b})`;
+            cctx.shadowColor = `rgba(${p.r}, ${p.gC}, ${p.b}, 0.7)`;
+            cctx.shadowBlur = 16 * DPR;
+            cctx.beginPath();
+            cctx.arc(0, 0, Math.max(1, p.w * 0.55), 0, Math.PI * 2);
+            cctx.fill();
+          } else {
+            const grad = cctx.createLinearGradient(-p.w, 0, p.w, 0);
+            grad.addColorStop(0, `rgba(${p.r}, ${p.gC}, ${p.b}, 0.05)`);
+            grad.addColorStop(0.45, `rgba(${p.r}, ${p.gC}, ${p.b}, 0.9)`);
+            grad.addColorStop(1, `rgba(${p.r}, ${p.gC}, ${p.b}, 0.08)`);
+            cctx.fillStyle = grad;
+            cctx.shadowColor = `rgba(${p.r}, ${p.gC}, ${p.b}, 0.35)`;
+            cctx.shadowBlur = 18 * DPR;
+            cctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          }
+          cctx.restore();
+        }
+
+        if (particles.length > 0) requestAnimationFrame(stepParticles);
+      }
+
+      function fireAtCenter() {
+        burst(window.innerWidth * (0.35 + Math.random() * 0.3), window.innerHeight * (0.28 + Math.random() * 0.35), 1);
+        if (particles.length > 0) requestAnimationFrame(stepParticles);
+      }
+
+      $("btnConfetti").addEventListener("click", () => {
+        fireAtCenter();
+      });
+      $("btnCloseCake").addEventListener("click", hideCakeEgg);
+      $("cakeModal").addEventListener("click", (e) => {
+        if (e.target === $("cakeModal")) hideCakeEgg();
+      });
+      $("btnCakeFire").addEventListener("click", () => fireAtCenter());
+      $("btnCakeCopy").addEventListener("click", copyWish);
+      window.addEventListener("pointerdown", (e) => {
+        // Don't trigger on button clicks twice
+        const t = e.target;
+        if (t && t.tagName === "BUTTON") return;
+        burst(e.clientX, e.clientY, 0.9);
+        requestAnimationFrame(stepParticles);
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") hideCakeEgg();
+        if (e.key.toLowerCase() === "c") fireAtCenter();
+      });
+
+      // ---- Starfield (subtle)
+      const sky = document.getElementById("sky");
+      const sctx = sky.getContext("2d");
+      let stars = [];
+
+      function initStars() {
+        const w = sky.width, h = sky.height;
+        const count = Math.floor((w * h) / (DPR * DPR) / 18000);
+        stars = Array.from({ length: count }, () => ({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: (0.6 + Math.random() * 1.8) * DPR,
+          a: 0.18 + Math.random() * 0.45,
+          tw: 0.003 + Math.random() * 0.01,
+          ph: Math.random() * Math.PI * 2,
+          hue: 200 + Math.random() * 30, // blue-ish
+        }));
+      }
+
+      function drawStars(ts) {
+        if (!sctx) return;
+        sctx.clearRect(0, 0, sky.width, sky.height);
+        for (const st of stars) {
+          const tw = st.a + Math.sin(ts * st.tw + st.ph) * 0.12;
+          sctx.fillStyle = `hsla(${st.hue}, 85%, 75%, ${clamp(tw, 0.05, 0.65)})`;
+          sctx.beginPath();
+          sctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+          sctx.fill();
+        }
+        requestAnimationFrame(drawStars);
+      }
+
+      resizeCanvases();
+      initStars();
+      requestAnimationFrame(drawStars);
+
+      // ---- Signature
+      const now = new Date();
+      $("sigLeft").textContent = `寫給晖的藍色祝福｜${now.getFullYear()}/05`;
+    </script>
+  </body>
+</html>
